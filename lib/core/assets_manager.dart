@@ -8,3 +8,11 @@ abstract class ImageAssets{
   static const String science = "${base}science.png";
   static const String general = "${base}general.png";
 }
+class SvgIcons{
+  static const String _base = "assets/svg_icons/";
+  static const String general = "${_base}home.svg";
+  static const String themeIcon = "${_base}theme.svg";
+  static const String language ="${_base}language.svg";
+  static const String search ="${_base}Search.svg";
+}
+

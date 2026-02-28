@@ -2,34 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:test_app/apis/api_service.dart';
 import 'package:test_app/apis/models/articles_response/Article.dart';
 import 'package:test_app/apis/models/sources_response/Source.dart';
 import 'package:test_app/core/colors_manager.dart';
-import 'package:test_app/data/data_sources/artilces_api_data_source.dart';
-import 'package:test_app/data/data_sources/source_api_data_source.dart';
-import 'package:test_app/data/repositories/artilces_repo_impl.dart';
-import 'package:test_app/data/repositories/sources_repo_impl.dart';
 import 'package:test_app/di/service_locator.dart';
 import 'package:test_app/features/home/sources_view/articles_view_model.dart';
 import 'package:test_app/features/home/sources_view/sources_view_model.dart';
 import 'package:test_app/models/category.dart';
-
+import 'article_bottom_sheet.dart';
 import 'article_item.dart';
-
 class SourcesView extends StatefulWidget {
   SourcesView({super.key, required this.category});
-
   CategoryModel category;
-
   @override
   State<SourcesView> createState() => _SourcesViewState();
 }
-
 class _SourcesViewState extends State<SourcesView> {
   late SourcesViewModel sourcesViewModel;
   late ArticlesViewModel articlesViewModel;
-
   void fetchData() async {
     sourcesViewModel = serviceLocator.get<SourcesViewModel>();
     articlesViewModel = serviceLocator.get<ArticlesViewModel>();
@@ -38,14 +28,12 @@ class _SourcesViewState extends State<SourcesView> {
       (sourcesViewModel.state as SourcesSuccessState).sources[0],
     );
   }
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    fetchData();
-  }
 
+      fetchData();
+  }
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -116,7 +104,22 @@ class _SourcesViewState extends State<SourcesView> {
               return Expanded(
                 child: ListView.separated(
                   itemBuilder: (context, index) =>
-                      ArticleItem(article: articles[index]),
+                      InkWell(
+                        onTap: (){
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) {
+                              return SafeArea(
+                                child: ArticleBottomSheet(
+                                  article: articles[index],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                          child: ArticleItem(article: articles[index])),
                   separatorBuilder: (context, index) => SizedBox(height: 16),
                   itemCount: articles.length,
                 ),

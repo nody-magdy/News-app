@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:test_app/apis/api_service.dart';
 import 'package:test_app/apis/models/articles_response/Article.dart';
 import 'package:test_app/apis/models/sources_response/Source.dart';
 import 'package:test_app/data/repositories/articles_repo.dart';

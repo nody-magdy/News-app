@@ -5,4 +5,5 @@ import '../../apis/models/sources_response/Source.dart';
 
 abstract class ArticlesRepo{
   Future<Either<String, List<Article>>> getArticles(Source source);
+  Future<Either<String, List<Article>>> searchArticles(String query);
 }

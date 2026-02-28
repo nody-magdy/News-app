@@ -27,6 +27,8 @@ import 'package:test_app/features/home/sources_view/articles_view_model.dart'
     as _i744;
 import 'package:test_app/features/home/sources_view/sources_view_model.dart'
     as _i173;
+import 'package:test_app/features/search_Screen/search_view_model.dart'
+    as _i1043;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -50,12 +52,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i744.ArticlesViewModel>(
       () => _i744.ArticlesViewModel(articlesRepo: gh<_i28.ArticlesRepo>()),
     );
+    gh.singleton<_i1043.SearchViewModel>(
+      () => _i1043.SearchViewModel(articlesRepo: gh<_i28.ArticlesRepo>()),
+    );
     gh.singleton<_i312.SourcesRepo>(
       () => _i923.SourcesRepoImpl(
         sourcesDataSource: gh<_i991.SourcesDataSource>(),
       ),
     );
-    gh.singleton<_i173.SourcesViewModel>(
+    gh.factory<_i173.SourcesViewModel>(
       () => _i173.SourcesViewModel(sourcesRepo: gh<_i312.SourcesRepo>()),
     );
     return this;

@@ -20,11 +20,11 @@ class NewsApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, _)=>MaterialApp(
         debugShowCheckedModeBanner: false,
-        routes: RoutesManager.routes,
+        onGenerateRoute: RoutesManager.routeGeneration,
         initialRoute:RoutesManager.homeScreen ,
         theme:ThemeManager.light ,
         darkTheme: ThemeManager.dark,
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.dark,
       ),
 
     );

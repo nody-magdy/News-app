@@ -4,8 +4,8 @@ import 'package:test_app/features/home/categories_view/category.dart';
 import 'package:test_app/models/category.dart';
 
 class CategoriesView extends StatelessWidget {
-   CategoriesView({super.key, required this.onCategoryItemClicked});
-void Function(CategoryModel) onCategoryItemClicked;
+ CategoriesView({super.key, required this.onCategoryItemClicked});
+  void Function(CategoryModel) onCategoryItemClicked;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,7 +13,8 @@ void Function(CategoryModel) onCategoryItemClicked;
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Good Morning\nHere is Some News For You", style: Theme.of(context).textTheme.titleMedium,),
+          Text("Good Morning\nHere is Some News For You", style: Theme.of(context).textTheme.headlineLarge
+            ,),
           SizedBox(height: 16.h,),
           Expanded(
             child: ListView.separated(

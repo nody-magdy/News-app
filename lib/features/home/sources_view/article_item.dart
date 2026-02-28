@@ -4,10 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_app/apis/models/articles_response/Article.dart';
 import 'package:test_app/core/colors_manager.dart';
-
 class ArticleItem extends StatelessWidget {
 Article article ;
-ArticleItem({required this.article});
+ ArticleItem({required this.article});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,12 +24,16 @@ ArticleItem({required this.article});
             errorWidget: (context, url, error) => Icon(Icons.error),
           ),
           SizedBox(height: 10.h,),
-          Text(article.title ?? '', style: GoogleFonts.inter(fontWeight: FontWeight.w700, color: ColorsManager.white, fontSize: 16.sp),),
+          Text(article.title ?? '', style: GoogleFonts.inter(fontWeight: FontWeight.w700,
+              color: ColorsManager.white, fontSize: 16.sp),),
           SizedBox(height: 10.h,),
           Row(
             children: [
-              Expanded(child: Text(article.author ?? '', style: GoogleFonts.inter(fontWeight: FontWeight.w500, color: ColorsManager.grey, fontSize: 12.sp))),
-              Expanded(child: Text(article.publishedAt ?? '', style: GoogleFonts.inter(fontWeight: FontWeight.w500, color: ColorsManager.grey, fontSize: 12.sp)))
+              Expanded(child: Text(article.author ?? '', style: GoogleFonts.inter(fontWeight: FontWeight.w500,
+                  color: ColorsManager.grey, fontSize: 12.sp))),
+              Expanded(child: Text(article.publishedAt ?? '',
+                  style: GoogleFonts.inter(fontWeight: FontWeight.w500,
+                  color: ColorsManager.grey, fontSize: 12.sp)))
             ],
           )
 

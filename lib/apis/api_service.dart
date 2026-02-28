@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
@@ -15,7 +14,7 @@ class APIService {
   static const String baseUrl = "newsapi.org";
   static const String sourcesEndPoint = "/v2/top-headlines/sources";
   static const String articlesEndPoint = "/v2/everything";
-  static const String apiKey = "811d8ca53d0d4ff281843e66552efcee";
+  static const String apiKey = "88c3ff3dffda46f1af2a4fd79ee0761d";
 
    Future<Result> getSources(CategoryModel category) async {
     Uri url = Uri.https(baseUrl, sourcesEndPoint, {
@@ -50,29 +49,62 @@ class APIService {
    Future<Either<String, List<Article>>> getArticles(
     Source source,
   ) async {
-    /// https://newsapi.org/v2/everything?q=bitcoin&apiKey=811d8ca53d0d4ff281843e66552efcee
-    Uri url = Uri.https(baseUrl, articlesEndPoint, {
-      "apiKey": apiKey,
-      "sources": source.id,
-    });
-    try {
-      http.Response serverResponse = await http.get(url);
-      var json = jsonDecode(serverResponse.body);
-      ArticlesResponse articlesResponse = ArticlesResponse.fromJson(json);
-      if (articlesResponse.status == 'error') {
-        return left(articlesResponse.message ?? '');
-      } else {
-        return right(articlesResponse.articles ?? []);
-      }
-    } catch (exception) {
-      if (exception is SocketException) {
-        return left("No Internet connection 😑");
-      } else if (exception is HttpException) {
-        return left("Couldn't find the post 😱");
-      } else if (exception is FormatException) {
-        return left("Bad response format 👎");
-      }
-      return left(exception.toString());
+     /// https://newsapi.org/v2/everything?q=bitcoin&apiKey=811d8ca53d0d4ff281843e66552efcee
+     Uri url = Uri.https(baseUrl, articlesEndPoint, {
+       "apiKey": apiKey,
+       "sources": source.id,
+     });
+     try {
+       http.Response serverResponse = await http.get(url);
+       var json = jsonDecode(serverResponse.body);
+       ArticlesResponse articlesResponse = ArticlesResponse.fromJson(json);
+       if (articlesResponse.status == 'error') {
+         return left(articlesResponse.message ?? '');
+       } else {
+         return right(articlesResponse.articles ?? []);
+       }
+     } catch (exception) {
+       if (exception is SocketException) {
+         return left("No Internet connection 😑");
+       } else if (exception is HttpException) {
+         return left("Couldn't find the post 😱");
+       } else if (exception is FormatException) {
+         return left("Bad response format 👎");
+       }
+       return left(exception.toString());
+     }
+   }
+  Future<Either<String, List<Article>>> searchArticles(String query) async {
+    if (query.trim().isEmpty) {
+      return right([]);
     }
-  }
+     Uri url = Uri.https(baseUrl,articlesEndPoint,{
+       'q': query,
+       'apiKey': apiKey,
+       'language': 'en',
+       'sortBy': 'publishedAt',
+       'pageSize': '20'
+       }
+       );
+     try {
+       http.Response serverResponse = await http.get(url);
+       var json = jsonDecode(serverResponse.body);
+       ArticlesResponse articlesResponse = ArticlesResponse.fromJson(json);
+       if (articlesResponse.status == 'error') {
+         return left(articlesResponse.message ?? '');
+       } else {
+         return right(articlesResponse.articles ?? []);
+       }
+     } catch (exception) {
+       if (exception is SocketException) {
+         return left("No Internet connection 😑");
+       } else if (exception is HttpException) {
+         return left("Couldn't find the post 😱");
+       } else if (exception is FormatException) {
+         return left("Bad response format 👎");
+       }
+       return left(exception.toString());
+     }
 }
+}
+

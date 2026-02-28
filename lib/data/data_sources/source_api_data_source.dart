@@ -11,5 +11,4 @@ class SourcesApiDataSource implements SourcesDataSource{
   Future<Result> getSources(CategoryModel category) {
     return apiService.getSources(category);
   }
-  
 }
